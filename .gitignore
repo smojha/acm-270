@@ -1,0 +1,68 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+*.dylib
+
+# Compiled files
+*.o
+*.out
+*.a
+*.exe
+
+# Virtual environments
+env/
+venv/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Packaging
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+MANIFEST
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IPython
+profile_default/
+ipython_config.py
+
+# MyPy, Pylint
+.mypy_cache/
+.dmypy.json
+.pyre/
+
+# VSCode
+.vscode/
+
+# PyCharm
+.idea/
+
+# OS files (macOS)
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+
+# macOS temporary files
+.Spotlight-V100
+.Trashes
+.fseventsd
+.VolumeIcon.icns
+
+# Temporary or swap files
+*.tmp
+*.temp
+*.bak
+*.swp
+*~

@@ -21,7 +21,7 @@ This project explores and compares data-driven methods for modeling dynamical sy
 
 ## Authors
 
-Kieran Vlahakis  
-Elizabeth Won  
-@anishgoel1
+@Kieran\ 
+@elizabethjhwon\
+@anishgoel1\
 @smojha
