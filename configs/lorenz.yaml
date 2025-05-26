@@ -1,8 +1,13 @@
 simulate_fn: lorenz
-z0_range: [-10.0, 10.0]
+z0_range: [1.0, 1.0]
 z0_dim: 3
-n_trajectories: 200
+n_trajectories: 10
 t_max: 20.0
-dt: 0.01
+dt: 0.1
+solver_method: DOP853
+parameters:
+  sigma: 10.0
+  rho: 28.0
+  beta: 2.6666666667
 filename: lorenz.npz
 save_dir: data

@@ -9,7 +9,17 @@ def lorenz(t, xyz, sigma, rho, beta):
     dzdt = x * y - beta * z
     return [dxdt, dydt, dzdt]
 
-def simulate(t_max=20.0, dt=0.01, z0=(1.0, 1.0, 1.0), **params):
+def simulate(
+    t_max=20.0,
+    dt=0.01,
+    z0=(1.0, 1.0, 1.0),
+    solver_method="RK45",
+    sigma=10.0,
+    rho=28.0,
+    beta=8.0 / 3,
+    rtol=1e-9,
+    atol=1e-9,
+):
     """
     Simulate the Lorenz system.
 
@@ -29,9 +39,10 @@ def simulate(t_max=20.0, dt=0.01, z0=(1.0, 1.0, 1.0), **params):
         t_span=(0.0, t_max),
         y0=z0,
         t_eval=t_eval,
-        args=tuple(params.get(k, v) for k, v in zip(["sigma", "rho", "beta"], [10.0, 28.0, 8/3])),
-        rtol=1e-9,
-        atol=1e-9,
+        method=solver_method,
+        args=(sigma, rho, beta),
+        rtol=rtol,
+        atol=atol,
     )
 
     if not sol.success:

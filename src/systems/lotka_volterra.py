@@ -18,32 +18,47 @@ def lotka_volterra(t, z, alpha=1.5, beta=1.0, delta=3.0, gamma=1.0):
     dydt = delta * x * y - gamma * y
     return [dxdt, dydt]
 
-def simulate(t_max=20.0, dt=0.01, z0=(1.0, 1.0), **params):
+def simulate(
+    t_max=20.0,
+    dt=0.01,
+    z0=(1.0, 1.0),
+    solver_method="RK45",
+    alpha=1.5,
+    beta=1.0,
+    delta=3.0,
+    gamma=1.0,
+    rtol=1e-9,
+    atol=1e-9,
+):
     """
-    Simulate the Lotka-Volterra system over time.
-    
+    Simulate the Lotka-Volterra system.
+
     Parameters:
-        t_max (float): Maximum time to simulate.
-        dt (float): Time step for evaluation.
-        z0 (tuple): Initial condition (x0, y0).
-        params (dict): Optional overrides for alpha, beta, delta, gamma.
-    
+        t_max (float): Simulation duration.
+        dt (float): Time step.
+        z0 (tuple): Initial conditions (x0, y0).
+        solver_method (str): Solver method (e.g., 'RK45', 'DOP853').
+        alpha, beta, delta, gamma (float): System parameters.
+        rtol, atol (float): Solver tolerances.
+
     Returns:
         t_eval (np.ndarray): Time points.
         trajectory (np.ndarray): State trajectory (N x 2).
     """
     t_eval = np.arange(0.0, t_max, dt)
+
     sol = solve_ivp(
         lotka_volterra,
         t_span=(0.0, t_max),
         y0=z0,
         t_eval=t_eval,
-        args=tuple(params.get(k, v) for k, v in zip(["alpha", "beta", "delta", "gamma"], [1.5, 1.0, 3.0, 1.0])),
-        rtol=1e-9,
-        atol=1e-9,
+        method=solver_method,
+        args=(alpha, beta, delta, gamma),
+        rtol=rtol,
+        atol=atol,
     )
 
     if not sol.success:
-        raise RuntimeError("Integration failed.")
+        raise RuntimeError(f"Integration failed: {sol.message}")
 
-    return t_eval, sol.y.T  # shape: (N, 2)
+    return t_eval, sol.y.T

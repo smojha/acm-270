@@ -1,8 +1,14 @@
 simulate_fn: lotka_volterra
-z0_range: [0.5, 2.0]
+z0_range: [1.0, 6.0]
 z0_dim: 2
-n_trajectories: 200
+n_trajectories: 10
 t_max: 30.0
-dt: 0.01
+dt: 0.1
+solver_method: DOP853
+parameters:
+  alpha: 1.1
+  beta: 0.4
+  delta: 0.1
+  gamma: 0.4
 filename: lotka_volterra.npz
 save_dir: data

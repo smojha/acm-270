@@ -18,18 +18,32 @@ def generate_batch_from_config(config_path):
     z0_range = config["z0_range"]
     z0_dim = config["z0_dim"]
 
+    # Optional solver and model parameters
+    solver_method = config.get("solver_method", "RK45")
+    model_params = config.get("parameters", {})
+
     def z0_sampler():
         return np.random.uniform(z0_range[0], z0_range[1], size=z0_dim)
 
+    # Wrap simulate_fn to inject method and parameters
+    def wrapped_simulate_fn(t_max, dt, z0):
+        return simulate_fn(
+            t_max=t_max,
+            dt=dt,
+            z0=z0,
+            solver_method=solver_method,
+            **model_params
+        )
+
     generate_batch(
-        simulate_fn=simulate_fn,
+        simulate_fn=wrapped_simulate_fn,
         z0_sampler=z0_sampler,
         n_trajectories=config.get("n_trajectories", 100),
         t_max=config.get("t_max", 20.0),
         dt=config.get("dt", 0.01),
         filename=config.get("filename", "output.npz"),
         save_dir=config.get("save_dir", "data"),
-        metadata=config  # pass config as metadata to be saved
+        metadata=config  # Save full config as metadata
     )
 
 def generate_batch(simulate_fn, z0_sampler, n_trajectories, t_max, dt, filename, save_dir, metadata=None):
